@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BeautyBloom - Makeup for Women</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --pink: #ff69b4;
+      --bg-light: #fff0f5;
+      --dark: #2b2b2b;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(to right, #ffe1f0, #fff0f5);
+      color: var(--dark);
+      scroll-behavior: smooth;
+    }
+
+    header {
+      background: var(--pink);
+      color: white;
+      padding: 1.2em 2em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    header:hover { background-color: powderblue; }
+
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+    }
+
+    nav a {
+      margin-left: 20px;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #ffe1f0;
+      font-size: 18px;
+    }
+
+    .hero {
+      height: 70px;
+      background: url('https://i.imgur.com/3ntnH8P.jpg') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      position: relative;
+      top: 10px;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-color: #f062a9;
+    }
+
+    .hero h1 {
+      position: relative;
+      font-size: 3.5rem;
+      font-family: 'Playfair Display', serif;
+      z-index: 2;
+      max-width: 90%;
+    }
+
+    .section {
+      padding: 4em 2em;
+      text-align: center;
+    }
+
+    .section h2 {
+      font-size: 2.5em;
+      margin-bottom: 1em;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2em;
+    }
+
+    .product {
+      background: white;
+      border-radius: 15px;
+      padding: 1em;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      transition: transform 0.4s, box-shadow 0.4s;
+    }
+
+    .product:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .product img {
+      width: 80%;
+      border-radius: 15px;
+      cursor: pointer;
+    }
+
+    .product h3 {
+      margin: 1em 0 0.5em;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .product p {
+      font-size: 0.9em;
+      color: #444;
+    }
+
+    form input, form textarea, form button {
+      display: block;
+      margin: 1em auto;
+      padding: 0.8em;
+      width: 90%;
+      max-width: 500px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-family: inherit;
+    }
+
+    form button {
+      background: var(--pink);
+      color: white;
+      border: none;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    form button:hover {
+      background: #e0559e;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    footer {
+      background: var(--dark);
+      color: white;
+      padding: 2em;
+      text-align: center;
+    }
+    footer:hover{
+      background-color: var(--pink);
+    }
+
+    #modeToggle {
+      background: white;
+      color: var(--pink);
+      border: none;
+      padding: 0.5em 1em;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    #modeToggle:hover {
+      background: #ffe1f0;
+    }
+
+    /* Dark Mode */
+    body.dark-mode {
+      background: #1c1c1c;
+      color: #fff;
+    }
+
+    body.dark-mode .section,
+    body.dark-mode .product {
+      background: #2b2b2b;
+      color: #fff;
+    }
+
+    body.dark-mode header {
+      background: #111;
+    }
+
+    body.dark-mode footer {
+      background: #000;
+    }
+
+    body.dark-mode form input,
+    body.dark-mode form textarea {
+      background: #333;
+      color: #fff;
+      border-color: #555;
+    }
+
+    body.dark-mode form button {
+      background: #ff69b4;
+    }
+
+    /* Modal Styles */
+    #modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    #modalContent {
+      background: white;
+      padding: 2em;
+      border-radius: 10px;
+      text-align: center;
+      max-width: 400px;
+      position: relative;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    #modalContent img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    #modalClose {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 25px;
+      cursor: pointer;
+      color: var(--pink);
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: scale(0.9);}
+      to {opacity: 1; transform: scale(1);}
+    }
+   .price-btn {
+  background: var(--pink);
+  color: white;
+  border: none;
+  padding: 0.5em 1em;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 1em;
+  margin-top: 0.5em;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.price-btn:hover {
+  background: #e0559e;
+  transform: scale(1.05);
+  cursor: pointer;
+}
+ </style>
+</head>
+<body>
+
+  <header>
+    <h1>BeautyBloom</h1>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#products">Products</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <button id="modeToggle">Dark Mode</button>
+    </nav>
+  </header>
+  <section class="hero" id="home">
+    <h1>Redefining Elegance, One Brush at a Time</h1>
+  </section>
+  <section class="section" id="products">
+    <h2>Explore Our Beauty Collection</h2>
+   <div class="products">
+  <div class="product">
+    <a href="image.jpg" target="_blank"><img src="f.jpg" alt="Highlighter"></a>
+    <h3>Velvet Matte Lipstick</h3>
+    <p>Bold & smooth lips for any occasion</p>
+    <button class="price-btn">$12.99</button>
+  </div>
+  <div class="product">
+    <a href="a.jpg" target="_blank"><img src="m.webp" alt="Eyeshadow"></a>
+    <h3>Smokey Eyes Palette</h3>
+    <p>16 shades of shimmer & matte perfection</p>
+    <button class="price-btn">$24.50</button>
+  </div>
+  <div class="product">
+    <a href="b.webp" target="_blank"><img src="b.webp" alt="Foundation"></a>
+    <h3>Silk Touch Foundation</h3>
+    <p>Seamless, radiant skin finish</p>
+    <button class="price-btn">$18.00</button>
+  </div>
+  <div class="product">
+    <a href="c.webp" target="_blank"><img src="c.webp" alt="Blush"></a>
+    <h3>Peach Glow Blush</h3>
+    <p>Natural color that blends beautifully</p>
+    <button class="price-btn">$14.75</button>
+  </div>
+  <div class="product">
+    <a href="d.webp" target="_blank"><img src="d.webp" alt="Highlighter"></a>
+    <h3>Gold Beam Highlighter</h3>
+    <p>Shine bright with this golden shimmer</p>
+     <button class="price-btn">$16.40</button>
+  </div>
+  <div class="product">
+    <a href="as.jpg" target="_blank"><img src="as.jpg" alt="Concealer"></a>
+    <h3>Perfect Cover Concealer</h3>
+    <p>Flawless coverage for under eyes & blemishes</p>
+    <button class="price-btn">$13.99</button>
+  </div>
+  <div class="product">
+    <a href="am.webp" target="_blank"><img src="am.webp" alt="Makeup Brushes"></a>
+    <h3>Pro Makeup Brush Set</h3>
+    <p>12 premium brushes for a perfect finish</p>
+     <button class="price-btn">$29.90</button>
+  </div>
+  <div class="product">
+    <a href="s.webp" target="_blank"><img src="s.webp" alt="Setting Spray"></a>
+    <h3>Stay Fresh Setting Spray</h3>
+    <p>Lock in your look for all-day glam</p>
+    <button class="price-btn">$10.25</button>
+  </div>
+</div>
+ </div>
+  </section>
+ <section class="section" id="about">
+    <h2>About BeautyBloom</h2>
+    <p>At BeautyBloom, we believe that makeup is more than a product — it's a powerful form of self-expression. All of our products are cruelty-free, made with love, and designed to help every woman shine.</p>
+  </section>
+  <section class="section" id="contact">
+    <h2>Contact Us</h2>
+    <form>
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Your Email" required>
+      <textarea rows="5" placeholder="Your Message" required></textarea>
+      <button type="submit">Send</button>
+    </form>
+  </section>
+ <footer>
+    <p>&copy; 2025 BeautyBloom. All Rights Reserved.</p>
+  </footer>
+
+  <!-- Modal HTML -->
+  <div id="modal">
+    <div id="modalContent">
+      <span id="modalClose">&times;</span>
+      <img id="modalImg" src="" alt="Product">
+      <h3 id="modalName"></h3>
+      <p id="modalDesc"></p>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('modeToggle').addEventListener('click', function () {
+      document.body.classList.toggle('dark-mode');
+    });
+
+    // Modal functionality
+    const modal = document.getElementById("modal");
+    const modalImg = document.getElementById("modalImg");
+    const modalName = document.getElementById("modalName");
+    const modalDesc = document.getElementById("modalDesc");
+    const modalClose = document.getElementById("modalClose");
+
+    document.querySelectorAll(".product-link").forEach(link => {
+      link.addEventListener("click", function (e) {
+        e.preventDefault();
+        modalImg.src = this.getAttribute("data-img");
+        modalName.textContent = this.getAttribute("data-name");
+        modalDesc.textContent = this.getAttribute("data-desc");
+        modal.style.display = "flex";
+      });
+    });
+
+    modalClose.addEventListener("click", () => {
+      modal.style.display = "none";
+    });
+
+    window.addEventListener("click", e => {
+      if (e.target === modal) modal.style.display = "none";
+    });
+  </script>
+</body>
+</html>
